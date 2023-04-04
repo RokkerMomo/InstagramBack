@@ -8,55 +8,46 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = require("mongoose");
-const bcrypt_1 = __importDefault(require("bcrypt"));
 //EL ESQUEMA DE USUARIO
-const UserSchema = new mongoose_1.Schema({
-    fullname: {
+const PostSchema = new mongoose_1.Schema({
+    ownername: {
         type: String,
         unique: false,
         required: true,
         trim: true
     },
-    usuario: {
+    owneruser: {
         type: String,
-        unique: true,
+        unique: false,
         required: true,
         trim: true
     },
-    password: {
+    owner: {
         type: String,
-        require: true
+        unique: false,
+        required: true,
+        trim: true
     },
-    bio: {
+    descripcion: {
         type: String,
-        required: false
+        unique: false,
+        required: false,
+        trim: true
     },
-    foto: {
+    fotoperfil: {
         type: String,
-        required: false
-    }
+        unique: false,
+        required: false,
+        trim: true
+    },
+    fecha: Date
 });
-UserSchema.pre('save', function (next) {
+PostSchema.index({ '$**': 'text' });
+PostSchema.pre('save', function (next) {
     return __awaiter(this, void 0, void 0, function* () {
-        const user = this;
-        if (!user.isModified('password'))
-            return next();
-        //ENCRIPTAR CONTRASEÑA
-        const salt = yield bcrypt_1.default.genSalt(10);
-        const hash = yield bcrypt_1.default.hash(user.password, salt);
-        user.password = hash;
         next();
     });
 });
-//COMPARAR CONTRASEÑAS ENCRIPTADAS
-UserSchema.methods.comparePassword = function (password) {
-    return __awaiter(this, void 0, void 0, function* () {
-        return yield bcrypt_1.default.compare(password, this.password);
-    });
-};
-exports.default = (0, mongoose_1.model)('usuarios', UserSchema);
+exports.default = (0, mongoose_1.model)('Post', PostSchema);

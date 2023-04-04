@@ -11,12 +11,19 @@ const tweet_controller_1 = require("../controllers/tweet.controller");
 const Like_controller_1 = require("../controllers/Like.controller");
 const Seguimiento_controller_1 = require("../controllers/Seguimiento.controller");
 const comentario_controller_1 = require("../controllers/comentario.controller");
+const post_controller_1 = require("../controllers/post.controller");
+const img_controller_1 = require("../controllers/img.controller");
 //endpoints para users
 router.post('/signup', user_contoller_1.signUp);
 router.post('/signin', user_contoller_1.signIn);
 router.post('/finduser', passport_1.default.authenticate('jwt', { session: false }), user_contoller_1.FindUser);
 router.post('/edituser', passport_1.default.authenticate('jwt', { session: false }), user_contoller_1.edituser);
 router.post('/editpass', passport_1.default.authenticate('jwt', { session: false }), user_contoller_1.editpassword);
+//enpoints para posts
+router.post('/newpost', passport_1.default.authenticate('jwt', { session: false }), post_controller_1.newPost);
+router.post('/showAllPosts', [passport_1.default.authenticate('jwt', { session: false }), post_controller_1.showAllPosts]);
+//enpoints para imagenes
+router.post('/newimg', passport_1.default.authenticate('jwt', { session: false }), img_controller_1.NewImg);
 //endpoints para Tweets
 router.post('/newtweet', passport_1.default.authenticate('jwt', { session: false }), tweet_controller_1.newTweet);
 router.post('/showuserTweets', passport_1.default.authenticate('jwt', { session: false }), tweet_controller_1.showUserTweets);

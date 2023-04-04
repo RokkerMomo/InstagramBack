@@ -12,12 +12,16 @@ return jwt.sign({id:user.id, usuario:user.usuario},config.jwtSecret,{
 }
 
  
-
+ 
 //REGISTRO
 export const signUp = async (req: Request,res: Response): Promise<Response> =>{
-    if (!req.body.usuario || !req.body.password){
-        return res.status(400).json({msg:'Asegurese de ingresar el usuario y la contraseña'})
+    if (!req.body.usuario || !req.body.password||!req.body.fullname){
+        return res.status(400).json({msg:'Asegurese de ingresar todos los datos necesarios'})
     }
+
+    if (req.body.password.length<=4){
+      return res.status(400).json({msg:'La contraseña debe de contener como minimo 5 caracteres'})
+  }
     const user = await usuarios.findOne({usuario:req.body.usuario});
     if(user){
         return res.status(400).json({msg:'El Usuario que ingreso ya existe'});

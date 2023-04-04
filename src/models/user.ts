@@ -3,26 +3,19 @@ import bcrypt from 'bcrypt'
 
 //INTERFACE
 export interface IUser extends Document {
-    nombre:string,
-    apellido:string,
+    fullname:string,
     usuario:string,
     password:string,
     bio:string,
     foto:string,
     comparePassword:(p: object) => Response
 
-    
+      
 }
 
 //EL ESQUEMA DE USUARIO
 const UserSchema = new Schema ({
-    nombre:{
-        type:String,
-        unique:false,
-        required:true,
-        trim:true
-    },
-    apellido:{
+    fullname:{
         type:String,
         unique:false,
         required:true,

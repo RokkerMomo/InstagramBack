@@ -9,6 +9,8 @@ import { deleteTweet, newTweet, search, showAllTweets, ShowFollowingTweets, show
 import { AddOrRemoveLike, CheckLike, GetLikes } from '../controllers/Like.controller';
 import { CheckFollow, followorunfollow, GetFollowers, GetFollowing } from '../controllers/Seguimiento.controller';
 import { DeleteComentario, getComentarios, GetNumeroDeComentarios, NuevoComentario } from '../controllers/comentario.controller';
+import { newPost, showAllPosts } from '../controllers/post.controller';
+import { NewImg } from '../controllers/img.controller';
  
 //endpoints para users
 router.post('/signup',signUp)
@@ -16,6 +18,13 @@ router.post('/signin',signIn)
 router.post('/finduser',passport.authenticate('jwt', {session:false}),FindUser)
 router.post('/edituser',passport.authenticate('jwt', {session:false}),edituser)
 router.post('/editpass',passport.authenticate('jwt', {session:false}),editpassword)
+
+//enpoints para posts
+router.post('/newpost',passport.authenticate('jwt', {session:false}),newPost)
+router.post('/showAllPosts',[passport.authenticate('jwt',{session:false}),showAllPosts])
+ 
+//enpoints para imagenes
+router.post('/newimg',passport.authenticate('jwt', {session:false}),NewImg)
 
 //endpoints para Tweets
 router.post('/newtweet',passport.authenticate('jwt', {session:false}),newTweet);
