@@ -22,8 +22,11 @@ router.post('/editpass', passport_1.default.authenticate('jwt', { session: false
 //enpoints para posts
 router.post('/newpost', passport_1.default.authenticate('jwt', { session: false }), post_controller_1.newPost);
 router.post('/showAllPosts', [passport_1.default.authenticate('jwt', { session: false }), post_controller_1.showAllPosts]);
-//enpoints para imagenes
+router.post('/showuserposts', passport_1.default.authenticate('jwt', { session: false }), post_controller_1.showUserPost);
+router.post('/searchpost', passport_1.default.authenticate('jwt', { session: false }), post_controller_1.searchPost);
+//enpoints para imagenes 
 router.post('/newimg', passport_1.default.authenticate('jwt', { session: false }), img_controller_1.NewImg);
+router.post('/showPostImgs', passport_1.default.authenticate('jwt', { session: false }), img_controller_1.showPostImgs);
 //endpoints para Tweets
 router.post('/newtweet', passport_1.default.authenticate('jwt', { session: false }), tweet_controller_1.newTweet);
 router.post('/showuserTweets', passport_1.default.authenticate('jwt', { session: false }), tweet_controller_1.showUserTweets);

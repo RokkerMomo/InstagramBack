@@ -2,13 +2,13 @@ import { Model, Schema, Document, model } from "mongoose";
 
 //INTERFACE
 export interface Like extends Document {
-    idTweet:string,
+    id:string,
     idUsuario:string,
 }
 
 //EL ESQUEMA DE USUARIO
 const LikeSchema = new Schema ({
-    idTweet:{
+    id:{
         type:String,
         unique:false,
         required:true,

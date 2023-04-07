@@ -4,7 +4,7 @@ import Like from "../models/Like";
 
 
 export const AddOrRemoveLike = async (req: Request,res: Response): Promise<Response> =>{
-    const result = await Like.find({ idTweet:req.body.idTweet,idUsuario:req.body.idUsuario});
+    const result = await Like.find({ id:req.body.id,idUsuario:req.body.idUsuario});
     console.log(result.length)
     if (result.length==0) {
         //GUARDAR Tweet
@@ -12,18 +12,18 @@ export const AddOrRemoveLike = async (req: Request,res: Response): Promise<Respo
     await newLike.save();
     return res.status(201).json({msg:"Se dio like"});
     }
-    await Like.deleteOne({ idTweet:req.body.idTweet,idUsuario:req.body.idUsuario});
+    await Like.deleteOne({ id:req.body.id,idUsuario:req.body.idUsuario});
     return  res.status(201).json({msg:'Se quito like'});
 }
 
 export const GetLikes = async (req: Request,res: Response): Promise<Response> =>{
-    const result = await Like.find({ idTweet:req.body.idTweet});
+    const result = await Like.find({ id:req.body.id});
     return res.status(201).json(result.length)
 }
 
 export const CheckLike = async (req: Request,res: Response): Promise<Response> =>{
 
-    const check = await Like.find({ idTweet:req.body.idTweet, idUsuario:req.body.idUsuario });
+    const check = await Like.find({ id:req.body.id, idUsuario:req.body.idUsuario });
     console.log(check.length)
     if (check.length==0) {
     return res.status(201).json({status:'false'});

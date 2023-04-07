@@ -16,7 +16,7 @@ exports.CheckLike = exports.GetLikes = exports.AddOrRemoveLike = void 0;
 const Like_1 = __importDefault(require("../models/Like"));
 //Crear Tweet
 const AddOrRemoveLike = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield Like_1.default.find({ idTweet: req.body.idTweet, idUsuario: req.body.idUsuario });
+    const result = yield Like_1.default.find({ id: req.body.id, idUsuario: req.body.idUsuario });
     console.log(result.length);
     if (result.length == 0) {
         //GUARDAR Tweet
@@ -24,17 +24,17 @@ const AddOrRemoveLike = (req, res) => __awaiter(void 0, void 0, void 0, function
         yield newLike.save();
         return res.status(201).json({ msg: "Se dio like" });
     }
-    yield Like_1.default.deleteOne({ idTweet: req.body.idTweet, idUsuario: req.body.idUsuario });
+    yield Like_1.default.deleteOne({ id: req.body.id, idUsuario: req.body.idUsuario });
     return res.status(201).json({ msg: 'Se quito like' });
 });
 exports.AddOrRemoveLike = AddOrRemoveLike;
 const GetLikes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield Like_1.default.find({ idTweet: req.body.idTweet });
+    const result = yield Like_1.default.find({ id: req.body.id });
     return res.status(201).json(result.length);
 });
 exports.GetLikes = GetLikes;
 const CheckLike = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const check = yield Like_1.default.find({ idTweet: req.body.idTweet, idUsuario: req.body.idUsuario });
+    const check = yield Like_1.default.find({ id: req.body.id, idUsuario: req.body.idUsuario });
     console.log(check.length);
     if (check.length == 0) {
         return res.status(201).json({ status: 'false' });

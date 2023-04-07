@@ -12,3 +12,12 @@ export const NewImg = async (req: Request,res: Response): Promise<Response> =>{
     await NewImg.save();
     return res.status(201).json(NewImg);
 }  
+
+export const showPostImgs =async (req:Request,res:Response): Promise<Response> => {
+    const Imgs = await Img.find({postid:req.body.postid})
+    if (!Imgs) {
+        return res.status(400).json({msg:'el post no tiene imagenes o no existe'})
+
+    }
+    return res.status(200).json(Imgs)
+}

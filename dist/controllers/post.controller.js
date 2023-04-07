@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.showAllPosts = exports.newPost = void 0;
+exports.searchPost = exports.showUserPost = exports.showAllPosts = exports.newPost = void 0;
 const post_1 = __importDefault(require("../models/post"));
 //Crear Post
 const newPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -30,3 +30,21 @@ const showAllPosts = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     return res.status(200).json(posts);
 });
 exports.showAllPosts = showAllPosts;
+const showUserPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const posts = yield post_1.default.find({ owner: req.body.owner }).sort({ fecha: 'desc' });
+    if (!posts) {
+        return res.status(400).json({ msg: "el usuario no tiene Posts" });
+    }
+    console.log(posts);
+    return res.status(201).json({ posts });
+});
+exports.showUserPost = showUserPost;
+const searchPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const Posts = yield post_1.default.find({ $text: { $search: req.body.descripcion } });
+    if (!Posts) {
+        return res.status(400).json({ msg: "El Posts que busco no existe" });
+    }
+    console.log(Posts);
+    return res.status(201).json({ Posts });
+});
+exports.searchPost = searchPost;

@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NewImg = void 0;
+exports.showPostImgs = exports.NewImg = void 0;
 const img_1 = __importDefault(require("../models/img"));
 const post_1 = __importDefault(require("../models/post"));
 const NewImg = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -26,3 +26,11 @@ const NewImg = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     return res.status(201).json(NewImg);
 });
 exports.NewImg = NewImg;
+const showPostImgs = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const Imgs = yield img_1.default.find({ postid: req.body.postid });
+    if (!Imgs) {
+        return res.status(400).json({ msg: 'el post no tiene imagenes o no existe' });
+    }
+    return res.status(200).json(Imgs);
+});
+exports.showPostImgs = showPostImgs;
