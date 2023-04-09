@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = require("mongoose");
 //EL ESQUEMA DE USUARIO
 const comentarioSchema = new mongoose_1.Schema({
-    idTweet: {
+    Postid: {
         type: String,
         unique: false,
         required: true,

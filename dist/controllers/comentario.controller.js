@@ -25,21 +25,21 @@ const NuevoComentario = (req, res) => __awaiter(void 0, void 0, void 0, function
 });
 exports.NuevoComentario = NuevoComentario;
 const getComentarios = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const comentarios = yield comentario_1.default.find({ idTweet: req.body.idTweet }).sort({ fecha: 'desc' });
+    const comentarios = yield comentario_1.default.find({ Postid: req.body.Postid }).sort({ fecha: 'desc' });
     return res.status(201).json(comentarios);
 });
 exports.getComentarios = getComentarios;
 const GetNumeroDeComentarios = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield comentario_1.default.find({ idTweet: req.body.idTweet });
+    const result = yield comentario_1.default.find({ Postid: req.body.Postid });
     return res.status(201).json(result.length);
 });
 exports.GetNumeroDeComentarios = GetNumeroDeComentarios;
 const DeleteComentario = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const nota = yield comentario_1.default.findOne({ _id: req.body.idTweet });
+    const nota = yield comentario_1.default.findOne({ _id: req.body.Postid });
     if (!nota) {
         return res.status(400).json({ msg: 'El Comentario que busco no existe' });
     }
-    const notas = yield comentario_1.default.deleteOne({ _id: req.body.idTweet });
+    const notas = yield comentario_1.default.deleteOne({ _id: req.body.Postid });
     console.log(notas);
     return res.status(201).json({ msg: "Comentario eliminado con exito" });
 });

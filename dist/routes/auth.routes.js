@@ -24,16 +24,18 @@ router.post('/newpost', passport_1.default.authenticate('jwt', { session: false 
 router.post('/showAllPosts', [passport_1.default.authenticate('jwt', { session: false }), post_controller_1.showAllPosts]);
 router.post('/showuserposts', passport_1.default.authenticate('jwt', { session: false }), post_controller_1.showUserPost);
 router.post('/searchpost', passport_1.default.authenticate('jwt', { session: false }), post_controller_1.searchPost);
+router.post('/showSinglePost', passport_1.default.authenticate('jwt', { session: false }), post_controller_1.showSinglePost);
+router.post('/showfollowing', passport_1.default.authenticate('jwt', { session: false }), post_controller_1.ShowFollowingPosts);
 //enpoints para imagenes 
 router.post('/newimg', passport_1.default.authenticate('jwt', { session: false }), img_controller_1.NewImg);
 router.post('/showPostImgs', passport_1.default.authenticate('jwt', { session: false }), img_controller_1.showPostImgs);
 //endpoints para Tweets
-router.post('/newtweet', passport_1.default.authenticate('jwt', { session: false }), tweet_controller_1.newTweet);
-router.post('/showuserTweets', passport_1.default.authenticate('jwt', { session: false }), tweet_controller_1.showUserTweets);
-router.post('/showfollowing', passport_1.default.authenticate('jwt', { session: false }), tweet_controller_1.ShowFollowingTweets);
-router.post('/showalltweets', passport_1.default.authenticate('jwt', { session: false }), tweet_controller_1.showAllTweets);
-router.post('/showSingleTweet', passport_1.default.authenticate('jwt', { session: false }), tweet_controller_1.showSingleTweet);
-router.post('/search', passport_1.default.authenticate('jwt', { session: false }), tweet_controller_1.search);
+// router.post('/newtweet',passport.authenticate('jwt', {session:false}),newTweet);
+// router.post('/showuserTweets',passport.authenticate('jwt', {session:false}),showUserTweets)
+// router.post('/showfollowing',passport.authenticate('jwt', {session:false}),ShowFollowingTweets)
+// router.post('/showalltweets',passport.authenticate('jwt', {session:false}),showAllTweets)
+// router.post('/showSingleTweet',passport.authenticate('jwt', {session:false}),showSingleTweet)
+// router.post('/search',passport.authenticate('jwt', {session:false}),search)
 router.post('/like', passport_1.default.authenticate('jwt', { session: false }), Like_controller_1.AddOrRemoveLike);
 router.post('/getlikes', passport_1.default.authenticate('jwt', { session: false }), Like_controller_1.GetLikes);
 router.post('/checklike', passport_1.default.authenticate('jwt', { session: false }), Like_controller_1.CheckLike);

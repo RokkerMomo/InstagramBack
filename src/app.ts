@@ -7,7 +7,7 @@ import authRoutes from "./routes/auth.routes";
 import privateroutes from "./routes/private.routes"
 //inicio
 const app = express();
-
+  
 // settings
 app.set('port', process.env.PORT || 3000);
 

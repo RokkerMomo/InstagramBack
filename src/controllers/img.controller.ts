@@ -8,11 +8,11 @@ export const NewImg = async (req: Request,res: Response): Promise<Response> =>{
         return res.status(400).json({msg:'no existe ese post'})
     }
     //GUARDAR Post
-    const NewImg = new Img(req.body);
+    const NewImg = new Img(req.body); 
     await NewImg.save();
     return res.status(201).json(NewImg);
 }  
-
+    
 export const showPostImgs =async (req:Request,res:Response): Promise<Response> => {
     const Imgs = await Img.find({postid:req.body.postid})
     if (!Imgs) {

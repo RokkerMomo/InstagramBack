@@ -9,7 +9,7 @@ import { deleteTweet, newTweet, search, showAllTweets, ShowFollowingTweets, show
 import { AddOrRemoveLike, CheckLike, GetLikes } from '../controllers/Like.controller';
 import { CheckFollow, followorunfollow, GetFollowers, GetFollowing } from '../controllers/Seguimiento.controller';
 import { DeleteComentario, getComentarios, GetNumeroDeComentarios, NuevoComentario } from '../controllers/comentario.controller';
-import { newPost, searchPost, showAllPosts, showUserPost } from '../controllers/post.controller';
+import { newPost, searchPost, showAllPosts, ShowFollowingPosts, showSinglePost, showUserPost } from '../controllers/post.controller';
 import { NewImg, showPostImgs } from '../controllers/img.controller';
  
 //endpoints para users
@@ -24,17 +24,19 @@ router.post('/newpost',passport.authenticate('jwt', {session:false}),newPost)
 router.post('/showAllPosts',[passport.authenticate('jwt',{session:false}),showAllPosts])
 router.post('/showuserposts',passport.authenticate('jwt', {session:false}),showUserPost)
 router.post('/searchpost',passport.authenticate('jwt', {session:false}),searchPost)
+router.post('/showSinglePost',passport.authenticate('jwt', {session:false}),showSinglePost)
+router.post('/showfollowing',passport.authenticate('jwt',{session:false}),ShowFollowingPosts)
 //enpoints para imagenes 
 router.post('/newimg',passport.authenticate('jwt', {session:false}),NewImg)
 router.post('/showPostImgs',passport.authenticate('jwt',{session:false}),showPostImgs)
 
 //endpoints para Tweets
-router.post('/newtweet',passport.authenticate('jwt', {session:false}),newTweet);
-router.post('/showuserTweets',passport.authenticate('jwt', {session:false}),showUserTweets)
-router.post('/showfollowing',passport.authenticate('jwt', {session:false}),ShowFollowingTweets)
-router.post('/showalltweets',passport.authenticate('jwt', {session:false}),showAllTweets)
-router.post('/showSingleTweet',passport.authenticate('jwt', {session:false}),showSingleTweet)
-router.post('/search',passport.authenticate('jwt', {session:false}),search)
+// router.post('/newtweet',passport.authenticate('jwt', {session:false}),newTweet);
+// router.post('/showuserTweets',passport.authenticate('jwt', {session:false}),showUserTweets)
+// router.post('/showfollowing',passport.authenticate('jwt', {session:false}),ShowFollowingTweets)
+// router.post('/showalltweets',passport.authenticate('jwt', {session:false}),showAllTweets)
+// router.post('/showSingleTweet',passport.authenticate('jwt', {session:false}),showSingleTweet)
+// router.post('/search',passport.authenticate('jwt', {session:false}),search)
 router.post('/like',passport.authenticate('jwt', {session:false}),AddOrRemoveLike)
 router.post('/getlikes',passport.authenticate('jwt', {session:false}),GetLikes)
 router.post('/checklike',passport.authenticate('jwt', {session:false}),CheckLike)

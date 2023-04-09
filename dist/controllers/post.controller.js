@@ -12,8 +12,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.searchPost = exports.showUserPost = exports.showAllPosts = exports.newPost = void 0;
+exports.ShowFollowingPosts = exports.showSinglePost = exports.searchPost = exports.showUserPost = exports.showAllPosts = exports.newPost = void 0;
 const post_1 = __importDefault(require("../models/post"));
+const Seguimiento_1 = __importDefault(require("../models/Seguimiento"));
 //Crear Post
 const newPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (!req.body.descripcion && req.body.foto == 'undefined') {
@@ -48,3 +49,25 @@ const searchPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     return res.status(201).json({ Posts });
 });
 exports.searchPost = searchPost;
+const showSinglePost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const post = yield post_1.default.findOne({ _id: req.body.Postid });
+    if (!post) {
+        return res.status(400).json({ msg: "El Post que busco no existe" });
+    }
+    console.log(post);
+    return res.status(201).json(post);
+});
+exports.showSinglePost = showSinglePost;
+const ShowFollowingPosts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const busqueda = yield Seguimiento_1.default.find({ idSeguidor: req.body.userid });
+    let result = [];
+    for (let i = 0; i < busqueda.length; i++) {
+        const Posts = yield post_1.default.find({ owner: busqueda[i].idSeguido });
+        result = result.concat(Posts);
+    }
+    let allPosts = result.sort(function (a, b) {
+        return new Date(b.fecha).getTime() - new Date(a.fecha).getTime();
+    });
+    return res.status(200).json(allPosts);
+});
+exports.ShowFollowingPosts = ShowFollowingPosts;

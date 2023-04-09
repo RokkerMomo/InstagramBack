@@ -2,7 +2,7 @@ import { Model, Schema, Document, model } from "mongoose";
 
 //INTERFACE
 export interface comentario extends Document {
-    idTweet:string,
+    Postid:string,
     ownername:string,
     owneruser:string,
     owner:string,
@@ -10,10 +10,10 @@ export interface comentario extends Document {
     fotoperfil:string,
     fecha:Date,
 }
-
+  
 //EL ESQUEMA DE USUARIO
 const comentarioSchema = new Schema ({
-    idTweet:{
+    Postid:{
         type:String,
         unique:false,
         required:true,
