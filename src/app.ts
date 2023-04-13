@@ -43,7 +43,7 @@ io.on("connection", (socket) => {
 });
 
 
-io.listen(4000);
+io.listen(80);
 
 app.use(authRoutes);
 app.use(privateroutes);

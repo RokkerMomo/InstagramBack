@@ -38,7 +38,7 @@ io.on("connection", (socket) => {
         });
     });
 });
-io.listen(4000);
+io.listen(80);
 app.use(auth_routes_1.default);
 app.use(private_routes_1.default);
 exports.default = app;
