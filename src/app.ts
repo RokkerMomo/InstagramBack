@@ -9,6 +9,7 @@ import http from "http";
 import { Server } from "socket.io";
 //inicio
 const app = express();   
+const server = http.createServer(app);
   
 // settings
 app.set('port', process.env.PORT || 3000);
@@ -26,12 +27,10 @@ app.get('/', (req, res) => {
   return res.send(`La API esta en http://localhost:${app.get('port')}`);
 })
 
-const io = new Server({
-  cors:{
-  origin:'*'
-}});
+const io = new Server(server);
 
 io.on("connection", (socket) => {
+  console.log('nueva conecxion por socket')
   console.log(socket.id)
 
 
@@ -43,7 +42,9 @@ io.on("connection", (socket) => {
 });
 
 
-io.listen(80);
+server.listen(process.env.PORT || 3000, () => {
+  console.log('listening on *', app.get('port'));
+});
 
 app.use(authRoutes);
 app.use(privateroutes);
