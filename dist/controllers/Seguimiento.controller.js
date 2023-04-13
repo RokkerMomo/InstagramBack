@@ -18,7 +18,6 @@ const followorunfollow = (req, res) => __awaiter(void 0, void 0, void 0, functio
     const result = yield Seguimiento_1.default.find({ idSeguido: req.body.idSeguido, idSeguidor: req.body.idSeguidor });
     console.log(result.length);
     if (result.length == 0) {
-        //GUARDAR Tweet
         const newLike = new Seguimiento_1.default(req.body);
         yield newLike.save();
         return res.status(201).json({ msg: "Ahora sigues a esta persona" });

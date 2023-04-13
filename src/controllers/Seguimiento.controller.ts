@@ -6,7 +6,6 @@ export const followorunfollow = async (req: Request,res: Response): Promise<Resp
     const result = await Seguir.find({ idSeguido:req.body.idSeguido, idSeguidor:req.body.idSeguidor });
     console.log(result.length)
     if (result.length==0) {
-        //GUARDAR Tweet
     const newLike = new Seguir(req.body);
     await newLike.save();
     return res.status(201).json({msg:"Ahora sigues a esta persona"});

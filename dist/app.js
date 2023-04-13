@@ -10,6 +10,7 @@ const passport_1 = __importDefault(require("passport"));
 const passport_2 = __importDefault(require("./middlewares/passport"));
 const auth_routes_1 = __importDefault(require("./routes/auth.routes"));
 const private_routes_1 = __importDefault(require("./routes/private.routes"));
+const socket_io_1 = require("socket.io");
 //inicio
 const app = (0, express_1.default)();
 // settings
@@ -24,6 +25,20 @@ passport_1.default.use(passport_2.default);
 app.get('/', (req, res) => {
     return res.send(`La API esta en http://localhost:${app.get('port')}`);
 });
+const io = new socket_io_1.Server({
+    cors: {
+        origin: '*'
+    }
+});
+io.on("connection", (socket) => {
+    console.log(socket.id);
+    socket.on('mensaje', (palabra) => {
+        socket.broadcast.emit('mensaje', {
+            body: palabra,
+        });
+    });
+});
+io.listen(4000);
 app.use(auth_routes_1.default);
 app.use(private_routes_1.default);
 exports.default = app;

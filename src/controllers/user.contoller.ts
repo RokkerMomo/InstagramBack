@@ -1,9 +1,10 @@
 import { Request, Response } from "express"
 import usuarios, {IUser} from "../models/user"
+import Post from "../models/post";
+import Story from "../models/story";
 import jwt from 'jsonwebtoken'
 import config from "../config/config";
 import bcrypt from 'bcrypt'
-import tweet from "../models/tweet";
 //FUNCION PARA CREAR TOKEN
 function createToken(user: IUser){
 return jwt.sign({id:user.id, usuario:user.usuario},config.jwtSecret,{
@@ -81,11 +82,25 @@ export const signIn = async (req: Request,res: Response): Promise<Response> => {
 
 
 export const edituser = async (req:Request, res: Response): Promise<Response>=>{
-  const user = await usuarios.updateOne({_id:req.body._id},{nombre:req.body.nombre, apellido:req.body.apellido, usuario:req.body.usuario, bio:req.body.bio});
+  const user = await usuarios.updateOne({_id:req.body._id},{fullname:req.body.fullname, usuario:req.body.usuario, bio:req.body.bio});
   if (!user) {
       return res.status(400).json({msg:"Error al intentar editar perfil"});
   }
-  const tweets = await tweet.updateMany({owner:req.body._id},{ownername:`${req.body.nombre} ${req.body.apellido}`, owneruser:req.body.usuario})
+  const Posts = await Post.updateMany({owner:req.body._id},{ownername:req.body.fullname, owneruser:req.body.usuario})
+
+  const storys = await Story.updateMany({owner:req.body._id},{ownername:req.body.fullname, owneruser:req.body.usuario})
+
+  return res.status(201).json({msg:"Guardado con exito"});
+}
+
+export const ChangePic = async (req:Request, res: Response): Promise<Response>=>{
+  const user = await usuarios.updateOne({_id:req.body._id},{foto:req.body.foto});
+  if (!user) {
+      return res.status(400).json({msg:"Error al intentar editar perfil"});
+  }
+  const posts = await Post.updateMany({owner:req.body._id},{fotoperfil:req.body.foto})
+
+  const storys = await Story.updateMany({owner:req.body._id},{fotoperfil:req.body.foto})
 
   return res.status(201).json({msg:"Guardado con exito"});
 }

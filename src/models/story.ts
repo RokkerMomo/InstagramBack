@@ -1,19 +1,19 @@
 import { Model, Schema, Document, model } from "mongoose";
 
 //INTERFACE
-export interface Tweet extends Document {
+export interface Story extends Document {
     ownername:string,
     owneruser:string,
     owner:string,
     descripcion:string,
-    foto:string,
     fotoperfil:string,
+    foto:string,
     fecha:Date,
 }
 
 
 //EL ESQUEMA DE USUARIO
-const TweetSchema = new Schema ({
+const StorySchema = new Schema ({
     ownername:{
         type:String,
         unique:false,
@@ -38,13 +38,13 @@ const TweetSchema = new Schema ({
         required:false,
         trim:true
     },
-    foto:{
+    fotoperfil:{
         type:String,
         unique:false,
         required:false,
         trim:true
     },
-    fotoperfil:{
+    foto:{
         type:String,
         unique:false,
         required:false,
@@ -53,11 +53,11 @@ const TweetSchema = new Schema ({
     fecha:Date
 });
 
-TweetSchema.index({'$**': 'text'});
+StorySchema.index({'$**': 'text'});
 
-TweetSchema.pre<Tweet>('save', async function(next){
+StorySchema.pre<Story>('save', async function(next){
     next();
 
 })
 
-export default model<Tweet>('Tweet', TweetSchema);
+export default model<Story>('Story', StorySchema);

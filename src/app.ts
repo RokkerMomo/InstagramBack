@@ -5,8 +5,10 @@ import passport from 'passport'
 import passportMiddleware from './middlewares/passport';
 import authRoutes from "./routes/auth.routes";
 import privateroutes from "./routes/private.routes"
+import http from "http";
+import { Server } from "socket.io";
 //inicio
-const app = express();
+const app = express();   
   
 // settings
 app.set('port', process.env.PORT || 3000);
@@ -23,6 +25,25 @@ passport.use(passportMiddleware);
 app.get('/', (req, res) => {
   return res.send(`La API esta en http://localhost:${app.get('port')}`);
 })
+
+const io = new Server({
+  cors:{
+  origin:'*'
+}});
+
+io.on("connection", (socket) => {
+  console.log(socket.id)
+
+
+  socket.on('mensaje',(palabra)=>{
+    socket.broadcast.emit('mensaje',{
+      body:palabra,
+    })
+  })
+});
+
+
+io.listen(4000);
 
 app.use(authRoutes);
 app.use(privateroutes);

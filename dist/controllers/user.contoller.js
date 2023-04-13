@@ -12,12 +12,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.editpassword = exports.edituser = exports.deleteUser = exports.FindUser = exports.signIn = exports.signUp = void 0;
+exports.editpassword = exports.ChangePic = exports.edituser = exports.deleteUser = exports.FindUser = exports.signIn = exports.signUp = void 0;
 const user_1 = __importDefault(require("../models/user"));
+const post_1 = __importDefault(require("../models/post"));
+const story_1 = __importDefault(require("../models/story"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const config_1 = __importDefault(require("../config/config"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
-const tweet_1 = __importDefault(require("../models/tweet"));
 //FUNCION PARA CREAR TOKEN
 function createToken(user) {
     return jsonwebtoken_1.default.sign({ id: user.id, usuario: user.usuario }, config_1.default.jwtSecret, {
@@ -81,14 +82,25 @@ const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.deleteUser = deleteUser;
 const edituser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield user_1.default.updateOne({ _id: req.body._id }, { nombre: req.body.nombre, apellido: req.body.apellido, usuario: req.body.usuario, bio: req.body.bio });
+    const user = yield user_1.default.updateOne({ _id: req.body._id }, { fullname: req.body.fullname, usuario: req.body.usuario, bio: req.body.bio });
     if (!user) {
         return res.status(400).json({ msg: "Error al intentar editar perfil" });
     }
-    const tweets = yield tweet_1.default.updateMany({ owner: req.body._id }, { ownername: `${req.body.nombre} ${req.body.apellido}`, owneruser: req.body.usuario });
+    const Posts = yield post_1.default.updateMany({ owner: req.body._id }, { ownername: req.body.fullname, owneruser: req.body.usuario });
+    const storys = yield story_1.default.updateMany({ owner: req.body._id }, { ownername: req.body.fullname, owneruser: req.body.usuario });
     return res.status(201).json({ msg: "Guardado con exito" });
 });
 exports.edituser = edituser;
+const ChangePic = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield user_1.default.updateOne({ _id: req.body._id }, { foto: req.body.foto });
+    if (!user) {
+        return res.status(400).json({ msg: "Error al intentar editar perfil" });
+    }
+    const posts = yield post_1.default.updateMany({ owner: req.body._id }, { fotoperfil: req.body.foto });
+    const storys = yield story_1.default.updateMany({ owner: req.body._id }, { fotoperfil: req.body.foto });
+    return res.status(201).json({ msg: "Guardado con exito" });
+});
+exports.ChangePic = ChangePic;
 const editpassword = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (!req.body.actual || !req.body.nueva) {
         return res.status(400).json({ msg: "Asegurese de ingresar los campos" });
